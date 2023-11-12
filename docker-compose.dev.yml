@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.7'
 
 services:
   mongo:
@@ -6,8 +6,24 @@ services:
     container_name: mongo
     ports:
       - '27017:27017'
+    networks:
+      - defualt
     volumes:
       - data:/data/db
 
+  express:
+    image: docker.arvancloud.ir/mongo-express
+    container_name: express
+    ports:
+      - '8081:8081'
+    networks:
+      - defualt
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: pass
+
 volumes:
   data:
+
+networks:
+  defualt:
