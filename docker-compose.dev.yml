@@ -1,13 +1,29 @@
 version: '3.7'
 
 services:
+  reservations:
+    build:
+      context: .
+      dockerfile: ./apps/reservations/Dockerfile
+      target: development
+    container_name: reservations
+    command: pnpm run start:dev reservations
+    ports:
+      - '3001:3000'
+    networks:
+      - sleepr
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - MONGOURI=mongodb://mongo:27017/sleepr
+
   mongo:
     image: docker.arvancloud.ir/mongo:6-jammy
     container_name: mongo
     ports:
       - '27017:27017'
     networks:
-      - defualt
+      - sleepr
     volumes:
       - data:/data/db
 
@@ -17,13 +33,19 @@ services:
     ports:
       - '8081:8081'
     networks:
-      - defualt
+      - sleepr
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: pass
 
 volumes:
   data:
+  app:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: .
 
 networks:
-  defualt:
+  sleepr:
