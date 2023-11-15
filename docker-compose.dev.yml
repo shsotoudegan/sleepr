@@ -17,6 +17,22 @@ services:
     environment:
       - MONGOURI=mongodb://mongo:27017/sleepr
 
+  auth:
+    build:
+      context: .
+      dockerfile: ./apps/auth/Dockerfile
+      target: development
+    container_name: auth
+    command: pnpm run start:dev auth
+    ports:
+      - '3002:3000'
+    networks:
+      - sleepr
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - MONGOURI=mongodb://mongo:27017/sleepr
+
   mongo:
     image: docker.arvancloud.ir/mongo:6-jammy
     container_name: mongo
