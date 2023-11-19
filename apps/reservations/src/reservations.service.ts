@@ -17,10 +17,11 @@ export class ReservationsService {
     return this.paymentsService
       .send('create_charge', createReservationDto.charge)
       .pipe(
-        map(() => {
+        map((response) => {
           return this.reservatiomnRepository.create({
             ...createReservationDto,
             timastamp: new Date(),
+            invoiceId: response.id,
             userId,
           });
         }),
