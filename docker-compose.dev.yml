@@ -17,6 +17,8 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongo:27017/sleepr
       - HTTP_PORT=3000
+      - AUTH_HOST=auth
+      - AUTH_PORT=3001
 
   auth:
     build:
@@ -34,6 +36,7 @@ services:
     environment:
       - MONGODB_URI=mongodb://mongo:27017/sleepr
       - HTTP_PORT=3000
+      - TCP_PORT=3001
       - JWT_SECRET=dsadHJKHJ655
       - JWT_EXPIRATION=3600
 
