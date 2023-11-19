@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   reservations:
@@ -15,10 +15,10 @@ services:
     volumes:
       - .:/usr/src/app
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/sleepr
-      - HTTP_PORT=3000
-      - AUTH_HOST=auth
-      - AUTH_PORT=3001
+      - MONGODB_URI=${MONGODB_URI}
+      - HTTP_PORT=${RESERVATIONS_HTTP_PORT}
+      - AUTH_HOST=${AUTH_HOST}
+      - AUTH_PORT=${AUTH_TCP_PORT}
 
   auth:
     build:
@@ -34,11 +34,11 @@ services:
     volumes:
       - .:/usr/src/app
     environment:
-      - MONGODB_URI=mongodb://mongo:27017/sleepr
-      - HTTP_PORT=3000
-      - TCP_PORT=3001
-      - JWT_SECRET=dsadHJKHJ655
-      - JWT_EXPIRATION=3600
+      - MONGODB_URI=${MONGODB_URI}
+      - HTTP_PORT=${AUTH_HTTP_PORT}
+      - TCP_PORT=${AUTH_TCP_PORT}
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRATION=${JWT_EXPIRATION}
 
   mongo:
     image: docker.arvancloud.ir/mongo:6-jammy
