@@ -19,6 +19,7 @@ export class PaymentsService {
       type: 'card',
       card,
     });
+
     return await this.stripe.paymentIntents.create({
       payment_method: paymentMethod.id,
       amount: amount * 100,
