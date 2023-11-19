@@ -57,6 +57,7 @@ services:
       - MONGODB_URI=${MONGODB_URI}
       - HTTP_PORT=${PAYMENTS_HTTP_PORT}
       - TCP_PORT=${PAYMENTS_TCP_PORT}
+      - STRIPE_SECRET=${STRIPE_SECRET}
 
   mongo:
     image: docker.arvancloud.ir/mongo:6-jammy
