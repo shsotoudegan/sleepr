@@ -40,6 +40,24 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRATION=${JWT_EXPIRATION}
 
+  payments:
+    build:
+      context: .
+      dockerfile: ./apps/payments/Dockerfile
+      target: development
+    container_name: payments
+    command: pnpm run start:dev payments
+    ports:
+      - '3003:3000'
+    networks:
+      - sleepr
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - HTTP_PORT=${PAYMENTS_HTTP_PORT}
+      - TCP_PORT=${PAYMENTS_TCP_PORT}
+
   mongo:
     image: docker.arvancloud.ir/mongo:6-jammy
     container_name: mongo
