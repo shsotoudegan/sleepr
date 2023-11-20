@@ -1,10 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { NOTIFICATIONS_SERVICE } from '@app/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ClientProxy } from '@nestjs/microservices';
 import Stripe from 'stripe';
 
 @Injectable()
 export class PaymentsService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    @Inject(NOTIFICATIONS_SERVICE)
+    private readonly notificationsService: ClientProxy,
+  ) {}
 
   private readonly stripe = new Stripe(
     this.configService.get('STRIPE_SECRET'),
@@ -26,6 +32,10 @@ export class PaymentsService {
       payment_method_types: ['card'],
       currency: 'usd',
     }); */
+
+    this.notificationsService.emit('notify_email', {
+      email: 'dsasadsasad@dsad.saad',
+    });
     return { id: 'payment id' };
   }
 }
