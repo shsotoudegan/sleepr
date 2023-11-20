@@ -61,6 +61,24 @@ services:
       - TCP_PORT=${PAYMENTS_TCP_PORT}
       - STRIPE_SECRET=${STRIPE_SECRET}
 
+  notifications:
+    build:
+      context: .
+      dockerfile: ./apps/notifications/Dockerfile
+      target: development
+    container_name: notifications
+    command: pnpm run start:dev notifications
+    ports:
+      - '3004:3000'
+    networks:
+      - sleepr
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - MONGODB_URI=${MONGODB_URI}
+      - HTTP_PORT=${NOTIFICATIONS_HTTP_PORT}
+      - TCP_PORT=${NOTIFICATIONS_TCP_PORT}
+
   mongo:
     image: docker.arvancloud.ir/mongo:6-jammy
     container_name: mongo
