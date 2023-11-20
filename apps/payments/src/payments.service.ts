@@ -20,6 +20,7 @@ export class PaymentsService {
   async createCharge(
     card: Stripe.PaymentMethodCreateParams.Card1,
     amount: number,
+    email: string,
   ) {
     /* const paymentMethod = await this.stripe.paymentMethods.create({
       type: 'card',
@@ -34,7 +35,7 @@ export class PaymentsService {
     }); */
 
     this.notificationsService.emit('notify_email', {
-      email: 'dsasadsasad@dsad.saad',
+      email,
     });
     return { id: 'payment id' };
   }
