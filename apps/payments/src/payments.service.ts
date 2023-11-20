@@ -15,17 +15,17 @@ export class PaymentsService {
     card: Stripe.PaymentMethodCreateParams.Card1,
     amount: number,
   ) {
-    const paymentMethod = await this.stripe.paymentMethods.create({
+    /* const paymentMethod = await this.stripe.paymentMethods.create({
       type: 'card',
       card,
     });
-
     return await this.stripe.paymentIntents.create({
       payment_method: paymentMethod.id,
       amount: amount * 100,
       confirm: true,
       payment_method_types: ['card'],
       currency: 'usd',
-    });
+    }); */
+    return { id: 'payment id' };
   }
 }
